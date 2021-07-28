@@ -25,6 +25,6 @@ Circuit to interface a micro controller with the readout subsystem, to permit di
 All work here is covered by the MIT Licence, which is simple and permissive.
 
 ## Background
-There is information to be found in many places, but a great starting point is [Tektronix 7000-Series Plug-in to Mainframe Interface Manual](https://w140.com/tekwiki/images/7/7c/Tek_7000-series_plug-in_mainframe_interface_manual_ocr.pdf), a previously Tek-internal engineering document now freely available.
+There is information to be found in many places, but a great starting point is [Tektronix 7000-Series Plug-in to Mainframe Interface Manual](https://w140.com/tekwiki/images/7/7c/Tek_7000-series_plug-in_mainframe_interface_manual_ocr.pdf). Originally a Tek-internal engineering document, now freely available.
 
 The [TekScopes mailing list](https://groups.io/g/TekScopes) is an invaluable source of knowledge, experience, and expertize on all Tek oscilliscopes, not just the 7000-series.
