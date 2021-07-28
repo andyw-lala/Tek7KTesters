@@ -16,7 +16,7 @@ This is a simple breakout board to facilitate experimentation and development us
 
 ### Pattern Generator
 Circuit to generate test patterns, consisting of vertical lines, horizontal lines, vertical and horizontal lines, and dots.
-Based on the Infineon (nee Cypress) PSOC5LP, plus required 
+Based on the Infineon (nee Cypress) PSOC5LP, plus required external circuitry.
 
 ### Readout Interface
 Circuit to interface a micro controller with the readout subsystem, to permit displayhing of arbitrary information, and/or testing of the readout circuitry.
