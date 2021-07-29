@@ -5,7 +5,7 @@ The intent is to allow cables to be routed out the front of the scope for connec
 
 ### Board Outline
 This is a crude dimensioned drawing of the basic board outline for the V1 breakout board.
-I make no apologies for the mixed units, the edge connector width is tied tightly to the 38-way 0.1" edge connector and the board width of 4.5".
+I make no apologies for the mixed units, the edge connector width is tied tightly to the 38-way 0.1" edge connector and the board width was clearly intended to be 4.5".
 All other dimensions were directly measured with a caliper from multiple 7000 plug-in modules.
 Form, fit, and function have been validated with plug-in frames, including the rear plastic housing (e.g., Tek part number 386-1402-00.)
 
