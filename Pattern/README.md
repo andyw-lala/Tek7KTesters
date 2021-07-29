@@ -1,4 +1,4 @@
-# Patttern Generator
+# Pattern Generator
 Generate assorted patterns, either via 100mV/division single-ended outputs, or via the backplane connectors (50mV/division differential)
 Purpose is to create test patterns that are used to ensure performance and geometry of the mainframe.
 
