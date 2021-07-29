@@ -15,3 +15,6 @@ Note that this does not include any indication for hard gold plating on the edge
 
 ### OSHpark Project
 The V1 board is available as a shared project from [OSHpark](https://oshpark.com/shared_projects/c7Hx5qZ4)
+
+### Important Note
+It is recommended by several members of the TekScopes mailing list to manually chamfer the edge connector and clean to remove dust before inserting into a scope mainframe, in order to avoid possible damage to the backplane connectors. As mentioedn above, the eagle files to not include this, and OSHpark does not offer chamfering on their boards, so you need to do this manually for OSHpark boards.
