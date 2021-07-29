@@ -27,4 +27,11 @@ All work here is covered by the MIT Licence, which is simple and permissive.
 ## Background
 There is information to be found in many places, but a great starting point is [Tektronix 7000-Series Plug-in to Mainframe Interface Manual](https://w140.com/tekwiki/images/7/7c/Tek_7000-series_plug-in_mainframe_interface_manual_ocr.pdf). Originally a Tek-internal engineering document, now freely available.
 
+Manuals for original calibration/test fixtures:
+* [067-0587-01](http://w140.com/tek_067_0587_01.pdf)
+* [067-0587-02](http://w140.com/tek-067-0587-02.pdf)
+* [067-0587-10](http://w140.com/tek_067-0587-10_service.pdf)
+* [067-0711-99](https://w140.com/tekwiki/images/8/87/Tek_067-0711-99.pdf)
+* [7M13](https://w140.com/tekwiki/images/3/33/070-1577-00.pdf)
+
 The [TekScopes mailing list](https://groups.io/g/TekScopes) is an invaluable source of knowledge, experience, and expertize on all Tek oscilliscopes, not just the 7000-series.
