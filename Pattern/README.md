@@ -11,6 +11,7 @@ Produce appropriate Z-axis signals as required.
 Design built around a PSOC5LP from Cypress, which has configurable mixed signal functionality on-chip, including multiple current DACs, combined with an ARM-based micro controller, with RAM & Flash.
 
 [CY8CKIT-059](https://www.mouser.com/ProductDetail/Cypress-Semiconductor/CY8CKIT-059)
+
 [PSoC Creator IDE](https://www.cypress.com/products/psoc-creator-integrated-design-environment-ide)
 
 TODO:

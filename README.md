@@ -14,7 +14,7 @@ Some of this work may be applicable or portable to other Tek plug-in based scope
 ### [Tek 7K Breakout Board](/Breakout)
 This is a simple breakout board to facilitate experimentation and development using the Tek 7000 backplane connections.
 
-### Pattern Generator
+### [Pattern Generator](/Pattern)
 Circuit to generate test patterns, consisting of vertical lines, horizontal lines, vertical and horizontal lines, and dots.
 Based on the Infineon (nee Cypress) PSOC5LP, plus required external circuitry.
 
