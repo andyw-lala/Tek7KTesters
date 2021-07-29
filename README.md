@@ -19,7 +19,7 @@ Circuit to generate test patterns, consisting of vertical lines, horizontal line
 Based on the Infineon (nee Cypress) PSOC5LP, plus required external circuitry.
 
 ### Readout Interface
-Circuit to interface a micro controller with the readout subsystem, to permit displayhing of arbitrary information, and/or testing of the readout circuitry.
+Circuit to interface a micro controller with the readout subsystem, to permit displaying of arbitrary information, and/or testing of the mainframe readout system.
 
 ## Licence
 All work here is covered by the MIT Licence, which is simple and permissive.
