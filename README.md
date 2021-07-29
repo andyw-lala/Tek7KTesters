@@ -1,7 +1,7 @@
 # Tek7KTesters
 
-Project to create modern test fixtures/modules for the Tektronix 7000-series scope mainframes.
-For more info on the 7000 series, see [Tekwiki](https://w140.com/tekwiki/wiki/Introduction_to_the_7000-Series) for more info on these excellent scopes.
+Project to create modern test fixtures/plug-ins for the Tektronix 7000-series scope mainframes.
+For more info on the 7000 series, see the excellent [Tekwiki](https://w140.com/tekwiki/wiki/Introduction_to_the_7000-Series).
 
 7000-series calibration plug-ins are a rare beast, and usually expensive when they can be found.
 
