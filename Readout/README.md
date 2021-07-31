@@ -9,15 +9,16 @@ The system can be fully implemented by passive components and wiring and/or swit
 ## Interfaces
 There are two interfaces needed to interact with the 7000-series readout system:
 * The ten timeslot scanning signals from the mainfram to the plug-in.
-This is a ~130-250uS wide pulse that drives to -15V, but is slew-rate controlled, in order to avoid generating noise in sensitive plug-ins.
-The timing is not explicitly specified in the documentation, especially when the current sinks are sampled.
+  This is a ~130-250uS wide pulse that drives to -15V, but is slew-rate controlled, in order to avoid generating noise in sensitive plug-ins.
+  The timing is not explicitly specified in the documentation, especially when the current sinks are sampled.
 
-![TS0 Pulse](/Images/Tek7K-TS0-202107301946.png)
+  ![TS0 Pulse](/Images/Tek7K-TS0-202107301946.png)
 
-The above image clearly shows a timeslot pulse that is 132us wide, with a plateau at -15V between approximately 45us and 65us.
-TODO: Document possible interface circuits (1 discrete, 1 based on 74AC14) - including timing diagrams.
+  The above image clearly shows a timeslot pulse that is 132us wide, with a plateau at -15V between approximately 45us and 65us.
+  TODO: Document possible interface circuits (1 discrete, 1 based on 74AC14) - including timing diagrams.
 
 * The four current sinks (row & column, channels 1 and 2) that encode the data for the indicated timeslot.
-TODO: Document useful current sink circuits, including current DACs and discrete solutions.
+  TODO: Document useful current sink circuits, including current DACs and discrete solutions.
 
 Given enough I/O pins on whatever is determining what to display (10 for timeslot reporting, 16 for current selection), you can interface directly with a microcontroller. However, an SPI interface is also defined which reduces the I/O requirement to six pins (SCLK, MOSI, MISO, CS0, CS1, INT.)
+
