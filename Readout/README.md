@@ -14,7 +14,7 @@ There are two interfaces needed to interact with the 7000-series readout system:
 
   ![TS0 Pulse](/Images/Tek7K-TS0-202107301946.png)
 
-  The above image clearly shows a timeslot pulse that is 132us wide, with a plateau at -15V between approximately 45us and 65us, which is where the sampling must occur for the resistor values to generate the appropriate currents.
+  The above image clearly shows a timeslot pulse that is around 130us wide, with a plateau at -15V between approximately 45us and 65us, which is where the sampling must occur for the resistor values to generate the appropriate currents.
 
   TODO: Document possible interface circuits (1 discrete, 1 based on 74AC14) - including timing diagrams.
 
