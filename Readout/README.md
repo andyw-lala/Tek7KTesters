@@ -15,9 +15,11 @@ There are two interfaces needed to interact with the 7000-series readout system:
   ![TS0 Pulse](/Images/Tek7K-TS0-202107301946.png)
 
   The above image clearly shows a timeslot pulse that is 132us wide, with a plateau at -15V between approximately 45us and 65us, which is where the sampling must occur for the resistor values to generate the appropriate currents.
+
   TODO: Document possible interface circuits (1 discrete, 1 based on 74AC14) - including timing diagrams.
 
 * The four current sinks (row & column, channels 1 and 2) that encode the data for the indicated timeslot.
+
   TODO: Document useful current sink circuits, including current DACs and discrete solutions.
 
 Given enough I/O pins on whatever is determining what to display (10 for timeslot reporting, 16 for current selection), you can interface directly with a microcontroller. However, an SPI interface is also defined which reduces the I/O requirement to six pins (SCLK, MOSI, MISO, CS0, CS1, INT.)
