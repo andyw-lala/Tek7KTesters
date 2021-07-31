@@ -11,7 +11,9 @@ There are two interfaces needed to interact with the 7000-series readout system:
 * The ten timeslot scanning signals from the mainfram to the plug-in.
 This is a ~130-250uS wide pulse that drives to -15V, but is slew-rate controlled, in order to avoid generating noise in sensitive plug-ins.
 The timing is not explicitly specified in the documentation, especially when the current sinks are sampled.
+
 ![TS0 Pulse](/Images/Tek7K-TS0-202107301946.png)
+
 The above image clearly shows a timeslot pulse that is 132us wide, with a plateau at -15V between approximately 45us and 65us.
 TODO: Document possible interface circuits (1 discrete, 1 based on 74AC14) - including timing diagrams.
 
