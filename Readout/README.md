@@ -1,13 +1,13 @@
 # Readout-related circuits
 The 7000-series readout circuitry is a clever, subtle, and novel solution.
 It is based on circuitry in the mainframe scanning the modules for characters to display in specific timeslots.
-There are 10 possible timeslots, and 2 locations per plug-in bay (e.g., 8 total locations in a 7904A, for a maximum total of 80 characters, though usually far fewer are displayed in normal operation.)
+There are 10 possible timeslots (character positions) per screen location, and 2 screen locations per plug-in bay (e.g., 8 total screen locations in a 7904A, for a maximum total of 80 characters, though usually far fewer are displayed in normal operation.)
 Display characters, or other metadata, are encoded in each timeslot by two currents (row and column) per location.
 Currents are encoded in 100uA steps.
 Modules need to always be prepared to sink either two or four currents to drive the display, but while the timeslot signals are simply bussed across all plug-in bays, the mainframe is paying attention to only one plug-in at a time (there is no indication to a plug-in that it is the active one.)
 The system can be fully implemented by passive components and wiring and/or switches, including modifying scales/prefixes. Changes can be accomplished simply by summing currents.
 ## Interfaces
-There are two interfaces needed to interact with the 7000-series readout system:
+There are two interfaces needed to interact with the 7000-series readout system - one from the mainframe to the plug-ins and one from the plug-ins to the mainframe:
 * The ten timeslot scanning signals from the mainfram to the plug-in.
   Each is a ~130-250uS wide pulse that drives to -15V, but is slew-rate controlled, in order to avoid generating noise in sensitive plug-ins.
   The timing is not explicitly specified in the documentation (that I can find), specifically when the current sinks are sampled, or setup/hold times.
