@@ -7,7 +7,7 @@ Currents are encoded in 100uA steps.
 Modules need to always be prepared to sink either two or four currents to drive the display, but while the timeslot signals are simply bussed across all plug-in bays, the mainframe is paying attention to only one plug-in at a time (there is no indication to a plug-in that it is the active one.)
 The system can be fully implemented by passive components and wiring and/or switches, including modifying scales/prefixes. Changes can be accomplished simply by summing currents.
 ## Interfaces
-There are two interfaces needed to interact with the 7000-series readout system:
+There are two interfaces needed to interact with the 7000-series readout system, one from the mainframe to the plug-in and one from the plug-in to the mainframe:
 * The ten timeslot scanning signals from the mainfram to the plug-in.
   Each is a ~130-250uS wide pulse that drives to -15V, but is slew-rate controlled, in order to avoid generating noise in sensitive plug-ins.
   The timing is not explicitly specified in the documentation (that I can find), specifically when the current sinks are sampled, or setup/hold times.
