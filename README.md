@@ -35,3 +35,6 @@ Manuals for original calibration/test fixtures:
 * [7M13](https://w140.com/tekwiki/images/3/33/070-1577-00.pdf)
 
 The [TekScopes mailing list](https://groups.io/g/TekScopes) is an invaluable source of knowledge, experience, and expertize on all Tek oscilliscopes, not just the 7000-series.
+
+## Disclaimer
+This project is presented as-is, all work and consequences are your sole responsibility. Do not work on Tek 7000 scopes unless you have the skills and knowledge to work safely, they contain **lethal** voltages. You perform all work at your own risk, and I have no responsibility for any damage or injury whatsoever.
