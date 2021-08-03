@@ -18,7 +18,7 @@ The timing is not explicitly specified in the documentation (that I can find), s
 
 ![TS0 Pulse](/Images/Tek7K-TS0-202107301946.png)
 
-The above image clearly shows a timeslot pulse that is around 130us wide, with a plateau at -15V between approximately 45us and 65us, which is where the sampling must occur for the resistor values to generate the appropriate currents.
+The above image clearly shows a timeslot pulse that is around 130us wide, with a plateau at -15V between approximately 45us and 65us, which is where the sampling must occur for the specified resistor values to generate the appropriate currents.
 
 Two different circuits were investigated to map the 0 -> -15V pulse from the mainframe onto a logic-level signal (circuits shown are for a single timeslot only):
 
