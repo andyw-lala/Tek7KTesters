@@ -20,11 +20,11 @@ The timing is not explicitly specified in the documentation (that I can find), s
 
 The above image clearly shows a timeslot pulse that is around 130us wide, with a plateau at -15V between approximately 45us and 65us, which is where the sampling must occur for the resistor values to generate the appropriate currents.
 
-Two circuits were investigated to map the 0 -> -15V pulse from the mainframe onto a logic-level signal:
+Two different circuits were investigated to map the 0 -> -15V pulse from the mainframe onto a logic-level signal (circuits shown are for a single timeslot only):
 
   1. Discrete Timeslot Input Interface Circuit
 
-     Based on the circuit used in the 7M13, using a single NPN transistor.
+     Based on the circuit used in the [7M13](https://w140.com/tekwiki/images/3/33/070-1577-00.pdf), using a single NPN transistor.
 
      ![Discrete Circuit](/Images/Discrete_timeslot_interface_snippet.png)
 
@@ -46,8 +46,9 @@ Two circuits were investigated to map the 0 -> -15V pulse from the mainframe ont
 
 Comparing the two circuits, the discrete design responds approximately 10us faster to the falling edge of the timeslot pulse, resulting in maximum setup time for the output currents.
 However, I believe the schmitt trigger-based design offers improved noise margin and less opportunity for false edges.  
-Measurements suggest the schmitt trigger circuit still offers adequate time (~30us) for firmware to react and set up the current sinks before the pulse bottoms out and the currents are sampled by the mainframe.  
-Therefore the schmitt trigger based solution is preferred.
+Measurements suggest the schmitt trigger circuit still offers adequate time (~30us) for firmware to react and set up the current sinks before the pulse bottoms out and the currents are sampled by the mainframe.
+Therefore the schmitt trigger based solution is preferred.  
+**Note:** Component values shown are for 5V logic - if 3.3V operation is required, the performance should be verified, and resistor values modified as needed.
 
 ### Readout Row and Column Currents
 The two or four current sinks (one or two channels respectively, each with independent row & column currents) that encode the data for the currently indicated timeslot.  
