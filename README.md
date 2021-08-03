@@ -5,7 +5,7 @@ For more info on the 7000 series, see the excellent [Tekwiki](https://w140.com/t
 
 7000-series calibration plug-ins are a rare beast, and usually expensive when they can be found.
 
-This project hopes to create some new calibration & test solutions, with circuit ideas and software that can be reused, mixed-and-matched, extended, and improved. Where appropriate, modern chip-level solutions are encouraged to be used, examples include balanced line drivers (both analog and LVDS), and microcontrollers.
+This project hopes to create some new calibration & test solutions, with circuit ideas and software that can be reused, mixed-and-matched, extended, and improved. Where appropriate, modern chip-level solutions are encouraged to be used, examples include: differential drivers (both analog and LVDS), and microcontrollers.
 
 Some of this work may be applicable or portable to other Tek plug-in based scopes, such as the 5000 series, but I don't own any of those (yet.)
 
