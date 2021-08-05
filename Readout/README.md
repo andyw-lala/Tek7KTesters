@@ -56,6 +56,8 @@ Channel 1 data will appear at the top of the screen, Channel 2 data will appear 
 
 ![Readout Current Sink](/Images/readout_current_sink_v1.png)
 
+Again, resistor values shown are valid for 5V logic, they will need to be modified as required for 3.3V operation.
+
 TODO: Document DAC-based current sink alternative.
 
 ## Microcontroller Connectivity
