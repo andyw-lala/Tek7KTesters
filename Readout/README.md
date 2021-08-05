@@ -54,7 +54,9 @@ Therefore the schmitt trigger based solution is preferred.
 The two or four current sinks (one or two channels respectively, each with independent row & column currents) that encode the data for the currently indicated timeslot.  
 Channel 1 data will appear at the top of the screen, Channel 2 data will appear at the bottom of the screen.
 
-TODO: Document useful current sink circuits, including current DACs and discrete solutions.
+![Readout Current Sink](/Images/readout_current_sink_v1.png)
+
+TODO: Document DAC-based current sink alternative.
 
 ## Microcontroller Connectivity
 Given enough I/O pins on whatever is determining what to display (10 for timeslot reporting, 16 for current selection), you can interface directly with a microcontroller. However, an SPI interface is also defined which reduces the I/O requirement to six pins (SCLK, MOSI, MISO, CS0, CS1, INT.)  
