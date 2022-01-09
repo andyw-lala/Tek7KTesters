@@ -38,13 +38,26 @@ The blue trace (LH axis) is the input pulse from the mainframe, red trace (RH ax
 The two or four current sinks (one or two channels respectively, each with independent row & column currents) that encode the data for the currently indicated timeslot.  
 Channel 1 data will appear at the top of the screen, Channel 2 data will appear at the bottom of the screen.
 
-![Readout Current Sink](/Images/readout_current_sink_v1.png)
+![Readout Current Sink](/Images/TS_Current_Sink.png)
 
-Again, resistor values shown are valid for 5V logic, they will need to be modified as required for 3.3V operation.
+Inputs (Bit0-3) are 5V logic level inputs that select 0 - 1500 uA currents in 100 uA steps. The output is a current sink to the -15 V rail that reflects the selected value.
 
-TODO: Document DAC-based current sink alternative.
+The theory of operation is as follows:
+
+* T1 is configured as a common emitter stage which is reliably driven between cuto-off and saturation by 5 V logic level inputs. Worst case logic 0 GPIO output from MCP23S17 I/O expander chip of 0.6 V only results in ~400 mV on the base, ensuring the transistor remains firmly off. T1 is driven into saturation by a logic 1 input, resulting in the base of T2 being held at around 30 mV. T2 then funcitons as a current source, based on R10 (since the emitter will be held at (Vbe + ~ 30 mV). Similarly for the other three bits. The values of R12, R14, and R16 result in binary weighted current sources. These are summed via 10K resistors and used to drive a Wilson current mirror that provides the output as a sink to the -15 V rail.
+
+This circuit is repeated four times, and driven by a single MCP23S17 I/O expander that is in turn driven via a high speed SPI interface from the PSoC.
 
 ## Microcontroller Connectivity
-Given enough I/O pins on whatever is determining what to display (10 for timeslot reporting, 16 for current selection), you can interface directly with a microcontroller. However, an SPI interface is also defined which reduces the I/O requirement to six pins (SCLK, MOSI, MISO, CS0, CS1, INT.)  
-There is a possible optimization that reduces the I/O pin count used by both the 7M13 and Ed Breya's design: timeslots 2 - 10 are or'ed together and simply advance a counter. Timeslot 1 is handled specially and resets the counter.
+
+### Inputs
+
+The timeslot input circuitry uses two pins of analog I/O into the PSoC.
+Internally these are conditioned via comparators (as described above) and used to maintain a counter of the most recent timeslot requested, and generate interrupts so that the firmware can determine the approriate row/column currents for each channel.
+
+Combining the nine timeslot signals as show reduces the number of input pins required, at the cost of obscuring specific timeslot outputs from the mainframe that may be malfunctioning.
+
+### Outputs
+
+Output required 16 pins of digital GPIO, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Therefore an I/O expander chip was used. SPI interface was selected to facilitate high speed (low latency) communication between the PSoC and the expander. The MCP23S17 provides 16 pins of I/O, while only using 4 pins on the PSoC/CY8CKIT-059.Z
 
