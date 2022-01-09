@@ -35,8 +35,10 @@ This circuit offers approximately 35 uS lead-time from the input signal crossing
 The blue trace (LH axis) is the input pulse from the mainframe, red trace (RH axis) is the signal as seen by the PSoC.
 
 ### Readout Row and Column Currents
-The two or four current sinks (one or two channels respectively, each with independent row & column currents) that encode the data for the currently indicated timeslot.  
+Four current sinks (two channels, each with independent row & column currents)  encode the data for the currently indicated timeslot.  
 Channel 1 data will appear at the top of the screen, Channel 2 data will appear at the bottom of the screen.
+
+The circuit used is shown below:
 
 ![Readout Current Sink](/Images/TS_Current_Sink.png)
 
@@ -44,9 +46,14 @@ Inputs (Bit0-3) are 5V logic level inputs that select 0 - 1500 uA currents in 10
 
 The theory of operation is as follows:
 
-* T1 is configured as a common emitter stage which is reliably driven between cuto-off and saturation by 5 V logic level inputs. Worst case logic 0 GPIO output from MCP23S17 I/O expander chip of 0.6 V only results in ~400 mV on the base, ensuring the transistor remains firmly off. T1 is driven into saturation by a logic 1 input, resulting in the base of T2 being held at around 30 mV. T2 then funcitons as a current source, based on R10 (since the emitter will be held at (Vbe + ~ 30 mV). Similarly for the other three bits. The values of R12, R14, and R16 result in binary weighted current sources. These are summed via 10K resistors and used to drive a Wilson current mirror that provides the output as a sink to the -15 V rail.
+* T1 is configured as a common emitter stage which is reliably driven between cuto-off and saturation by 5 V logic level inputs.
+* Worst case logic 0 GPIO output from MCP23S17 I/O expander chip of 0.6 V only results in ~400 mV on the base, ensuring the transistor remains firmly off.
+* T1 is driven into saturation by a logic 1 input, resulting in the base of T2 being held at around 30 mV.
+* T2 then funcitons as a current source, based on R10 (since the emitter will be held at (Vbe + ~ 30 mV).
+* Similarly for the other three bits. The values of R12, R14, and R16 result in binary weighted current sources.
+* These are summed via 10K resistors and used to drive a Wilson current mirror that provides the output as a sink to the -15 V rail.
 
-This circuit is repeated four times, and driven by a single MCP23S17 I/O expander that is in turn driven via a high speed SPI interface from the PSoC.
+This circuit is repeated four times.
 
 ## Microcontroller Connectivity
 
