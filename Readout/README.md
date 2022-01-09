@@ -75,7 +75,7 @@ Combining the nine timeslot signals as show reduces the number of input pins req
 
 Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Therefore an I/O expander chip was used. SPI interface was selected to facilitate high speed (low latency) communication between the PSoC and the expander. The MCP23S17 provides 16 pins of I/O, while only using 4 pins on the PSoC/CY8CKIT-059.
 
-TODO:
+# TODO:
 * Add PSoC hardware diagrams, once finalized.
 * Add example code.
 * Add MCP23S17 diagram & references.
