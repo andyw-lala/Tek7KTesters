@@ -50,7 +50,7 @@ The theory of operation is as follows:
 * T1 is configured as a common emitter stage which is reliably driven between cut-off and saturation by 5 V logic level inputs.
 * Worst case logic 0 GPIO output from MCP23S17 I/O expander chip of 0.6 V only results in ~400 mV on the base, ensuring the transistor remains firmly off.
 * T1 is driven into saturation by a logic 1 input, resulting in the base of T2 being held at around 30 mV.
-* T2 then funcitons as a current source, based on R10 (since the emitter will be held at (Vbe + ~ 30 mV).
+* T2 then funcitons as a 100 uA current source, based on R10 (since the emitter will be held at (Vbe + ~ 30 mV).
 * Similarly for the other three bits. The values of R12, R14, and R16 result in binary weighted current sources.
 * These are summed via 10K resistors and used to drive a Wilson current mirror that provides the output as a sink to the -15 V rail.
 
