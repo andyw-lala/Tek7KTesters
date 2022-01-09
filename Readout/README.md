@@ -12,7 +12,7 @@ There are two interfaces needed to interact with the 7000-series readout system 
 
 ### Timeslot Signals
 
-The ten timeslot scanning signals from the mainframe to the plug-in.
+There are ten timeslot scanning signals from the mainframe to the plug-in.
 Each individual timeslot signal is activated in a repeating sequence.
 Each pulse is ~130-250uS wide and drives from ground to -15V, but is carefully slew-rate controlled, in order to avoid generating noise in sensitive plug-ins.
 The timing is not explicitly specified in the documentation (that I can find), specifically when the current sinks are sampled, or setup/hold times.
@@ -47,7 +47,7 @@ Inputs (Bit0-3) are 5V logic level inputs that select 0 - 1500 uA currents in 10
 
 The theory of operation is as follows:
 
-* T1 is configured as a common emitter stage which is reliably driven between cuto-off and saturation by 5 V logic level inputs.
+* T1 is configured as a common emitter stage which is reliably driven between cut-off and saturation by 5 V logic level inputs.
 * Worst case logic 0 GPIO output from MCP23S17 I/O expander chip of 0.6 V only results in ~400 mV on the base, ensuring the transistor remains firmly off.
 * T1 is driven into saturation by a logic 1 input, resulting in the base of T2 being held at around 30 mV.
 * T2 then funcitons as a current source, based on R10 (since the emitter will be held at (Vbe + ~ 30 mV).
