@@ -62,7 +62,7 @@ The theory of operation is as follows:
 
 This circuit is repeated four times.
 
-## Microcontroller Connectivity
+## PSoC Connectivity
 
 ### Inputs
 
