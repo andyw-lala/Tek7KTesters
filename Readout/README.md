@@ -20,35 +20,19 @@ The timing is not explicitly specified in the documentation (that I can find), s
 
 The above image clearly shows a timeslot pulse that is around 130us wide, with a plateau at -15V between approximately 45us and 65us, which is where the sampling must occur for the specified resistor values to generate the appropriate currents.
 
-Two different circuits were investigated to map the 0 -> -15V pulse from the mainframe onto a logic-level signal (circuits shown are for a single timeslot only):
+# Interfacing to PSoC
 
-  1. Discrete Timeslot Input Interface Circuit
+Working from a circuit from [Ed Breya on the TekScopes mailing list](https://groups.io/g/TekScopes/photo/266548/3273411), I adapted it to feed two on-chip comparators, both of which use the on-chip 1.024 V reference.
 
-     Based on the circuit used in the [7M13](https://w140.com/tekwiki/images/3/33/070-1577-00.pdf), using a single NPN transistor.
+![Input Conditioning](/Images/TS_Pulse_Inputs.png)
 
-     ![Discrete Circuit](/Images/Discrete_timeslot_interface_snippet.png)
+The outputs from the comparators feed an on-chip counter (not shown.) TS_0 resets it, TS_n increments it, either signal will generate an interrupt.
 
-     The resistor values have been tweaked from the 7M13 design, to reduce quiescent current consumption.
+This circuit offers approximately 35 uS lead-time from the input signal crossing the 1.024 V threshold to the bottom of the input pulse when the current sinks need to be set-up.
 
-     Channel 2 (blue) in the following scope capture shows the output of the circuit:
+![Input Timing](/Images/TS_Pulse_Input_Timing.png)
 
-     ![Discrete Trace](/Images/Tek7K-TS0-202107271813.png)
-
-  2. Schmitt Trigger Timeslot Input Interface Circuit
-
-     Based on a circuit from [Ed Breya on the TekScopes mailing list](https://groups.io/g/TekScopes/photo/266548/3273411) which uses logic, clamping diodes, and current limiting resistors.
-
-     ![Schmitt Trigger Circuit](/Images/Schmitt_trigger_timeslot_interface_snippet.png)
-
-     Again, channel 2 (blue) is the resulting output:
-
-     ![Schmitt Trigger Trace](/Images/Tek7K-TS0-202107281441.png)
-
-Comparing the two circuits, the discrete design responds approximately 10us faster to the falling edge of the timeslot pulse, resulting in maximum setup time for the output currents.
-However, I believe the schmitt trigger-based design offers improved noise margin and less opportunity for false edges.  
-Measurements suggest the schmitt trigger circuit still offers adequate time (~30us) for firmware to react and set up the current sinks before the pulse bottoms out and the currents are sampled by the mainframe.
-Therefore the schmitt trigger based solution is preferred.  
-**Note:** Component values shown are for 5V logic - if 3.3V operation is required, the performance should be verified, and resistor values modified as needed.
+The blue trace (LH axis) is the input pulse from the mainframe, red trace (RH axis) is the signal as seen by the PSoC.
 
 ### Readout Row and Column Currents
 The two or four current sinks (one or two channels respectively, each with independent row & column currents) that encode the data for the currently indicated timeslot.  
