@@ -39,7 +39,7 @@ The following image shows the same input pulse in blue, but the red trace reflec
 
 ![Input ISR Timing](/Images/TS_Pulse_Input_ISR_Timing.png)
 
-This demonstrates that the solution will work, and as long as we do not make interrupts for extended periods we can use software to service the readout circuitry.
+This demonstrates that the solution will work, and as long as we do not mask interrupts for extended periods we can use software to service the readout circuitry.
 
 ### Readout Row and Column Currents
 Four current sinks (two channels, each with independent row & column currents)  encode the data for the currently indicated timeslot.  
