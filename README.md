@@ -36,5 +36,9 @@ Manuals for original calibration/test fixtures:
 
 The [TekScopes mailing list](https://groups.io/g/TekScopes) is an invaluable source of knowledge, experience, and expertize on all Tek oscilliscopes, not just the 7000-series.
 
+## TODO
+* Fast edge driver, ideas incliude LVDS drivers, or MAX3949 (like the Leo Bodnar pulser I have that happily does <40pS edges, I like this because it is configurable to some extent)
+* Levelling amp, will likely think about this last, as I believe it will be the most difficult subsystem to get right, and make repeatable, especially up to 7104 bandwidths..
+
 ## Disclaimer
 This project is presented as-is, all work and consequences are your sole responsibility. Do not work on Tek 7000 scopes unless you have the skills and knowledge to work safely, they contain **lethal** voltages. You perform all work at your own risk, and I have no responsibility for any damage or injury whatsoever.
