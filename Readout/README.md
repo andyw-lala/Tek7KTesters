@@ -80,6 +80,8 @@ The theory of operation is as follows:
 
 This circuit is repeated four times (row and column for each of two channels.)
 
+![Readout Current Sink](/Images/Readout_current_all.png)
+
 ## Prototype Test PCB
 ![Q2 2022 Prototype and eval board](/Images/Proto-board-Q2-22.png)
 
