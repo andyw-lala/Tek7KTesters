@@ -35,7 +35,7 @@ This circuit offers approximately 35 uS lead-time from the input signal crossing
 
 The blue trace (LH axis) is the input pulse from the mainframe, red trace (RH axis) is the signal as seen by the PSoC.
 
-The following image shows the same input pulse in blue, but the red trace reflects the time spent in the interrupt handler on the ARM CPU in the PSoC. The ISR is reading the timeslot value from the counter and then writing new values to an SPI I/O expander. In practice, an additional lookup will be involved, but that will hardly impact the duration of the ISR.
+The following image shows the same input pulse in blue, but the red trace reflects the time spent in the interrupt handler on the ARM CPU in the PSoC. The ISR is reading the timeslot value from the counter and then writing new values to the readout current circuitry via the shift registers described below. In practice, additional lookups will be involved, but that will hardly impact the duration of the ISR.
 
 ![Input ISR Timing](/Images/TS_Pulse_Input_ISR_Timing.png)
 
