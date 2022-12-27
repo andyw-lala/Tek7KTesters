@@ -35,11 +35,30 @@ This circuit offers approximately 35 uS lead-time from the input signal crossing
 
 The blue trace (LH axis) is the input pulse from the mainframe, red trace (RH axis) is the signal as seen by the PSoC.
 
-The following image shows the same input pulse in blue, but the red trace reflects the time spent in the interrupt handler on the ARM CPU in the PSoC. The ISR is reading the timeslot value from the counter and then writing new values to the I/O expander via SPI. In practice, an additional lookup will be involved, but that will hardly impact the duration of the ISR.
+The following image shows the same input pulse in blue, but the red trace reflects the time spent in the interrupt handler on the ARM CPU in the PSoC. The ISR is reading the timeslot value from the counter and then writing new values to an SPI I/O expander. In practice, an additional lookup will be involved, but that will hardly impact the duration of the ISR.
 
 ![Input ISR Timing](/Images/TS_Pulse_Input_ISR_Timing.png)
 
 This demonstrates that the solution will work, and as long as we do not mask interrupts for extended periods we can use software to service the readout circuitry.
+
+## PSoC Connectivity
+
+### Inputs
+
+The timeslot input circuitry uses two pins of analog I/O into the PSoC.
+Internally these are conditioned via comparators (as described above) and used to maintain a counter of the most recent timeslot requested, and generate interrupts so that the firmware can determine the approriate row/column currents for each channel.
+
+Combining the nine timeslot signals as show reduces the number of input pins required, at the cost of obscuring specific timeslot outputs from the mainframe that may be malfunctioning.
+
+![TS Input](/Images/TS_Input.png)
+
+### Outputs
+
+Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the design was quickly refined to use 74HC596 open-drain shift registers instead, with a simple driver circuit implemented in the PSOC. Two 596 shift registers are used, each implemeting the 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuit.
+
+![TS Output Logic](/Images/TS_Output_Logic.png)
+
+The function to invert and write a 16-bit value to the outboard shift registers takes under 1 uS.
 
 ### Readout Row and Column Currents
 Four current sinks (two channels, each with independent row & column currents)  encode the data for the currently indicated timeslot.  
@@ -60,23 +79,6 @@ The theory of operation is as follows:
 * Because the weighted output current is selected when the open drain output is low, the value written needs to be the bitwise inverse of the desired current.
 
 This circuit is repeated four times (row and column for two channels.)
-
-## PSoC Connectivity
-
-### Inputs
-
-The timeslot input circuitry uses two pins of analog I/O into the PSoC.
-Internally these are conditioned via comparators (as described above) and used to maintain a counter of the most recent timeslot requested, and generate interrupts so that the firmware can determine the approriate row/column currents for each channel.
-
-Combining the nine timeslot signals as show reduces the number of input pins required, at the cost of obscuring specific timeslot outputs from the mainframe that may be malfunctioning.
-
-![TS Input](/Images/TS_Input.png)
-
-### Outputs
-
-Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the design was quickly refined to use 74HCS596 open-drain shift registers instead, with a simple driver circuit implemented in the PSOC. Two 596 shift registers are used, each implemeting the 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuit.
-
-![TS Output Logic](/Images/TS_Output_Logic.png)
 
 ## Prototype Test PCB
 ![Q2 2022 Prototype and eval board](/Images/Proto-board-Q2-22.png)
