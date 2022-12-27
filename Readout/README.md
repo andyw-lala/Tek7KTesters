@@ -47,22 +47,19 @@ Channel 1 data will appear at the top of the screen, Channel 2 data will appear 
 
 The circuit used is shown below:
 
-![Readout Current Sink](/Images/TS_Current_Sink.png)
+![Readout Current Sink](/Images/TS_Current_Sink_2.png)
 
-Inputs (Bit0-3) are 5V logic level inputs that select 0 - 1500 uA currents in 100 uA steps. The output is a current sink to the -15 V rail that reflects the selected value.
+Inputs (4 bits per current sink) are open-drain inputs that select 0 - 1500 uA currents in 100 uA steps. The output is a current sink to the -15 V rail that reflects the selected binary value.
 
 The theory of operation is as follows:
 
-* T1 is configured as a common emitter stage which is reliably driven between cut-off and saturation by 5 V logic level inputs.
-* Worst case logic 0 GPIO output from MCP23S17 I/O expander chip of 0.6 V only results in ~400 mV on the base, ensuring T1 remains firmly off.
-* T1 is driven into saturation by a logic 1 input, resulting in the base of T2 being held at around 30 mV.
-* T2 then functions as a 100 uA current source, with the current defined by R10 (since the emitter will be held at (Vbe + ~ 30 mV).
-* Similarly for each of the other three bits. The values of R12, R14, and R16 result in binary weighted current sources.
-* These are summed via 10K resistors and used to drive an enhanced Wilson current mirror (U2, 4 matched NPN transistors in a single package) that provides the signal required by the mainframe as a current sink to the -15 V rail.
+* Each bit consists of a single PNP transistor whose base is pulled up by a 4k7 resistor. When the open-drain driver is active, the base is pulled to within a few mV of ground, turning the trasistor on.
+* Each transistor has an emitter resistor that is chosen to deliver a specific current based on the 4.3V drop between the 5V rail and Vbe (approx 0.7V).
+* 43K => 100uA, 21K5 => 200uA, 10K7 => 400uA, 5K36 => 400uA
+* These currents are summed via individual 1K resistors, and mirrored agaisnt the -15V rail by a current mirror using a THAT 300S (4 matched NPN transistors.)
+* Because the weighted output current is selected when the open drain output is low, the value written needs to be the bitwise inverse of the desired current.
 
 This circuit is repeated four times (row and column for two channels.)
-
-Note: R92-5 are normally not populated. They are on the schematic to facilitate testing of the prototype.
 
 ## PSoC Connectivity
 
@@ -75,12 +72,12 @@ Combining the nine timeslot signals as show reduces the number of input pins req
 
 ### Outputs
 
-Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Therefore an I/O expander chip was used. SPI interface was selected to facilitate high speed (low latency) communication between the PSoC and the expander. The MCP23S17 provides 16 pins of I/O, while only using 4 pins on the PSoC/CY8CKIT-059.
+Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the design was quickly refined to use 74HCS596 open-drain shift registers instead, with a simple driver circuit implemented in the PSOC. Two 596 shift registers are used, each implemeting the 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuit.
+
+![TS Output Logic](/Images/TS_Output_Logic.png)
 
 ## Prototype Test PCB
 ![Q2 2022 Prototype and eval board](/Images/Proto-board-Q2-22.png)
 
 # TODO:
-* Add PSoC hardware diagrams, once finalized.
 * Add example code.
-* Add MCP23S17 diagram & references.
