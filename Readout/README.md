@@ -70,6 +70,8 @@ Internally these are conditioned via comparators (as described above) and used t
 
 Combining the nine timeslot signals as show reduces the number of input pins required, at the cost of obscuring specific timeslot outputs from the mainframe that may be malfunctioning.
 
+![TS Input](/Images/TS_Input.png)
+
 ### Outputs
 
 Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the design was quickly refined to use 74HCS596 open-drain shift registers instead, with a simple driver circuit implemented in the PSOC. Two 596 shift registers are used, each implemeting the 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuit.
