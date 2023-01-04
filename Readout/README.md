@@ -74,7 +74,7 @@ The theory of operation is as follows:
 
 * Each bit consists of a single PNP transistor whose base is pulled up by a 4k7 resistor. When the open-drain driver is active, the base is pulled to within a few mV of ground, turning the transistor on.
 * Each transistor has an emitter resistor that is chosen to deliver a specific current based on the 4.3V drop between the 5V rail and Vbe (approx 0.7V).
-* 43K => 100uA, 21K5 => 200uA, 10K7 => 400uA, 5K36 => 400uA
+* 43K => 100uA, 21K5 => 200uA, 10K7 => 400uA, 5K36 => 800uA
 * These currents are summed via individual 1K resistors, and mirrored against the -15V rail by a current mirror using a THAT 300S (4 matched NPN transistors.)
 * Because the weighted output current is selected when the open drain output is low, the value written needs to be the bitwise inverse of the desired current.
 
