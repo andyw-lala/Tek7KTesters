@@ -7,3 +7,4 @@ TODO:
 * Trim the content held in git as much as possible, forcing PCoC Creator to regenerate files it can as needed.
 * Tune the .gitignore file to ensure we don't pick up cruft.
 * Correctly set up Debug/Release builds.
+* Verified to work with PSoC Creator 4.4
