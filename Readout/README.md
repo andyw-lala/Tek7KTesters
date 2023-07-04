@@ -25,8 +25,7 @@ The above image clearly shows a timeslot pulse that is around 130us wide, with a
 
 Adapting the timeslot input circuitry used on the 7D15, the timeslot pulses are fed to a JFET, which is normally conducting, with its drain at 0V. When the TS pulse starts to go negative, the JFET will turn off, allowing the voltage at the drain to rise. Since the PSOC lacks schmitt trigger inputs, we use on-chip comparators with hysterisis enabled to condition the input signal. This circuit is implemented twice, once for TS1 and once for all the other tS signals, diode or-ed together. A 100K pull-down resistor on the JFET gate ensures a timely turn on of the fet as the diodes would otherwise isolate the gate. Although the TS1 signal strictly speaking does not require the diode, it is implemented so that the circuitry and timing seen by each timeslot is identical.
 
-![Input Conditioning](/Images/TS_Pulse_Inputs.png)
-TODO: replace this drawing.
+![Input Conditioning](/Images/TS_Pulse_Inputs_20230703.png)
 
 This circuit offers approximately 40 uS lead-time from the input signal crossing the 1.024 V threshold to the bottom of the input pulse when the current sinks need to be set-up.
 
