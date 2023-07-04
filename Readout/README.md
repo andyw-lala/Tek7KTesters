@@ -25,17 +25,17 @@ The above image clearly shows a timeslot pulse that is around 130us wide, with a
 
 Adapting the timeslot input circuitry used on the 7D15, the timeslot pulses are fed to a JFET, which is normally conducting, with its drain at 0V. When the TS pulse starts to go negative, the JFET will turn off, allowing the voltage at the drain to rise. Since the PSOC lacks schmitt trigger inputs, we use on-chip comparators with hysterisis enabled to condition the input signal. This circuit is implemented twice, once for TS1 and once for all the other tS signals, diode or-ed together. A 100K pull-down resistor on the JFET gate ensures a timely turn on of the fet as the diodes would otherwise isolate the gate. Although the TS1 signal strictly speaking does not require the diode, it is implemented so that the circuitry and timing seen by each timeslot is identical.
 
-![Input Conditioning](/Images/TS_Pulse_Inputs_20230703.png)
+![Input Conditioning](/Images/Readout_input_20230703.png)
 
-This circuit offers approximately 40 uS lead-time from the input signal crossing the 1.024 V threshold to the bottom of the input pulse when the current sinks need to be set-up.
+This circuit offers approximately 57 uS lead-time from the input signal crossing the 1.024 V threshold to the bottom of the input pulse when the current sinks need to be set-up.
 
-![Input Timing](/Images/TS_Pulse_Input_Timing.png)
+![Input Timing](/Images/TS_Pulse_Inputs_20230703.png)
 
 The blue trace (LH axis) is the input pulse from the mainframe, red trace (RH axis) is the signal as seen by the PSoC.
 
 The following image shows the same input pulse in blue, but the red trace reflects the time spent in the interrupt handler on the ARM CPU in the PSoC (note the timebase change from 20us to 10us per division.) The ISR is reading the timeslot value from the counter and then writing new values to the readout current circuitry via the shift registers described below. In practice, additional lookups will be involved, but that will hardly impact the duration of the ISR.
 
-![Input ISR Timing](/Images/TS_Pulse_Input_ISR_Timing.png)
+![Input ISR Timing](/Images/TS_Pulse_Input_ISR_Timing_20230703.png)
 
 This demonstrates that the solution will work, and as long as we do not mask interrupts for extended periods we can use software to service the readout circuitry.
 
