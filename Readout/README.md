@@ -23,13 +23,12 @@ The above image clearly shows a timeslot pulse that is around 130us wide, with a
 
 # Interfacing to PSoC
 
-Working from a circuit from [Ed Breya on the TekScopes mailing list](https://groups.io/g/TekScopes/photo/266548/3273411), I adapted it to feed two on-chip comparators, both of which use the on-chip 1.024 V reference.
+Adapting the timeslot input circuitry used on the 7D15, the timeslot pulses are fed to a JFET, which is normally conducting, with its drain at 0V. When the TS pulse starts to go negative, the JFET will turn off, allowing the voltage at the drain to rise. Since the PSOC lacks schmitt trigger inputs, we use on-chip comparators with hysterisis enabled to condition the input signal. This circuit is implemented twice, once for TS1 and once for all the other tS signals, diode or-ed together. A 100K pull-down resistor on the JFET gate ensures a timely turn on of the fet as the diodes would otherwise isolate the gate. Although the TS1 signal strictly speaking does not require the diode, it is implemented so that the circuitry and timing seen by each timeslot is identical.
 
 ![Input Conditioning](/Images/TS_Pulse_Inputs.png)
+TODO: replace this drawing.
 
-The outputs from the comparators feed an on-chip counter (not shown.) TS_0 resets it, TS_n increments it, either signal will generate an interrupt.
-
-This circuit offers approximately 35 uS lead-time from the input signal crossing the 1.024 V threshold to the bottom of the input pulse when the current sinks need to be set-up.
+This circuit offers approximately 40 uS lead-time from the input signal crossing the 1.024 V threshold to the bottom of the input pulse when the current sinks need to be set-up.
 
 ![Input Timing](/Images/TS_Pulse_Input_Timing.png)
 
@@ -48,17 +47,15 @@ This demonstrates that the solution will work, and as long as we do not mask int
 The timeslot input circuitry uses two pins of analog I/O into the PSoC.
 Internally these are conditioned via comparators (as described above) and used to maintain a counter of the most recent timeslot requested, and generate interrupts so that the firmware can determine the approriate row/column currents for each channel.
 
-Combining the nine timeslot signals as show reduces the number of input pins required, at the cost of obscuring specific timeslot outputs from the mainframe that may be malfunctioning.
+Combining the nine timeslot signals as shown reduces the number of input pins required, at the cost of obscuring specific timeslot outputs from the mainframe that may be malfunctioning.
 
-![TS Input](/Images/TS_Input.png)
+![TS Input](/Images/Readout_input_20230703.png)
 
 ### Outputs
 
 Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the design was quickly refined to use 74HC596 open-drain shift registers instead, with a simple driver circuit implemented in the PSOC. Two 596 shift registers are used, each implemeting the 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuit.
 
-![TS Output Logic](/Images/TS_Output_Logic.png)
-
-The function to invert and write a 16-bit value to the outboard shift registers takes under 1 uS.
+![TS Output Logic](/Images/Readout_output_20230703.png)
 
 ### Readout Row and Column Currents
 Four current sinks (two channels, each with independent row & column currents)  encode the data for the currently indicated timeslot.  
@@ -76,7 +73,7 @@ The theory of operation is as follows:
 * Each transistor has an emitter resistor that is chosen to deliver a specific current based on the 4.3V drop between the 5V rail and Vbe (approx 0.7V).
 * 43K => 100uA, 21K5 => 200uA, 10K7 => 400uA, 5K36 => 800uA
 * These currents are summed via individual 1K resistors, and mirrored against the -15V rail by a current mirror using a THAT 300S (4 matched NPN transistors.)
-* Because the weighted output current is selected when the open drain output is low, the value written needs to be the bitwise inverse of the desired current.
+* Because the weighted output current is selected when the open drain output is low, the value written needs to be the bitwise inverse of the desired current. This is accoumplished by inverting the bitstream within the PSOC between the shift register and the I/O pin.
 
 This circuit is repeated four times (row and column for each of two channels.)
 
