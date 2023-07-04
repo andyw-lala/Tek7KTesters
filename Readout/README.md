@@ -78,8 +78,8 @@ This circuit is repeated four times (row and column for each of two channels.)
 
 ![Readout Current Sink](/Images/Readout_current_all.png)
 
-## Prototype Test PCB (prior revision, using MCP23S17)
-![Q2 2022 Prototype and eval board](/Images/Proto-board-Q2-22.png)
+## Demonstration of circuit in action
+![Image of readout display](/Images/Readout_Example_20230703.jpg)
 
 # TODO:
 * Add example code.
