@@ -52,7 +52,7 @@ Combining the nine timeslot signals as shown reduces the number of input pins re
 
 ### Outputs
 
-Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the design was quickly refined to use 74HC596 open-drain shift registers instead, with a simple driver circuit implemented in the PSOC. Two 596 shift registers are used, each implemeting the 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuit.
+Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the final design was uses 74HC595 shift registers coupled with a simple driver circuit implemented in the PSOC as a write-only port expander. Two 595 shift registers are used, each implemeting the 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuit.
 
 ![TS Output Logic](/Images/Readout_output_20230703.png)
 
@@ -62,21 +62,14 @@ Channel 1 data will appear at the top of the screen, Channel 2 data will appear 
 
 The circuit used is shown below:
 
-![Readout Current Sink](/Images/TS_Current_Sink_2.png)
+![Readout Current Sink](/Images/Readout_V4_Extract.png)
 
-Inputs (4 bits per current sink) are open-drain inputs that select 0 - 1500 uA currents in 100 uA steps. The output is a current sink to the -15 V rail that reflects the selected binary value.
-
-The theory of operation is as follows:
-
-* Each bit consists of a single PNP transistor whose base is pulled up by a 4k7 resistor. When the open-drain driver is active, the base is pulled to within a few mV of ground, turning the transistor on.
-* Each transistor has an emitter resistor that is chosen to deliver a specific current based on the 4.3V drop between the 5V rail and Vbe (approx 0.7V).
-* 43K => 100uA, 21K5 => 200uA, 10K7 => 400uA, 5K36 => 800uA
-* These currents are summed via individual 1K resistors, and mirrored against the -15V rail by a current mirror using a THAT 300S (4 matched NPN transistors.)
-* Because the weighted output current is selected when the open drain output is low, the value written needs to be the bitwise inverse of the desired current. This is accoumplished by inverting the bitstream within the PSOC between the shift register and the I/O pin.
-
-This circuit is repeated four times (row and column for each of two channels.)
-
-![Readout Current Sink](/Images/Readout_current_all.png)
+The parallel outputs of the shift registers drive four 4-bit [R-2R voltage DACs](https://en.wikipedia.org/wiki/Resistor_ladder#R%E2%80%932R_resistor_ladder_network_(digital_to_analog_conversion)). These output 0 - 4.6875V in 312.5mV steps, for values between 0 and 15 respectively. Note that R-2R ladders maintain a fixed impedance, equal to R regardless of input value.
+As noted above, the mainframe measures the current flowing out of the mainframe row and current connections in 100uA steps when the timeslot signal is stable at -15V (the middle of the pulse.)
+The mainframe row and current sense pins are nominally at ground.
+This current is developed by applying a negative voltage across a fixed resistor which connects to the mainframe row and column pins. Since 5K precision (1%) resistors are aleady used elsewhere in the design, this value was selected.
+100uA corresponds to 500mV across a 5K resistor, therefor a simple inverting amplifier with a gain of -1.6 can be used to convert the DAC output into a suitable negative voltage to convert each 312.5mV step from the DAC into a 100uA current flowing out of the mainframe sense pins.
+Thus we can generate four independant 0 - 1500uA current sinks each with 100uA resolution, using only 3 pins on the PSoC, and 3 low-cost ICs.
 
 ## Demonstration of circuit in action
 ![Image of readout display](/Images/Readout_Example_20230703.jpg)
@@ -101,8 +94,6 @@ CY_ISR (TS_ISR)
 {
     uint8 ts;
     
-    lala_Write(0x01);	// Set debug timing pin high
-    
     ts = Timeslot_Read();
     
     if (ts >= 10) {
@@ -110,7 +101,5 @@ CY_ISR (TS_ISR)
     } else {
         Readout_Write(top[ts], bottom[ts]);
     }
-    
-    lala_Write(0x00);	// Set debug timing pin low
 }
 ```
