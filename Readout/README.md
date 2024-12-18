@@ -25,7 +25,7 @@ More details can be found on [TekWiki](https://w140.com/tekwiki/wiki/7000_series
 
 # Interfacing to PSoC
 
-Adapting the timeslot input circuitry used on the 7D11, the timeslot pulses from the mainframe are fed to a JFET, which is normally conducting, with its drain at 0V. When the TS pulse starts to go negative, the JFET will turn off, allowing the voltage at the drain to rise. Since the PSOC lacks schmitt trigger inputs, we use on-chip comparators with hysterisis enabled to condition the input signal. This circuit is implemented twice, once for TS1 and once for all the other TS signals, diode or-ed together. A 100K pull-down resistor on the JFET gate ensures a timely turn on of the fet as the diodes would otherwise isolate the gate. Although the TS1 signal strictly speaking does not require the diode, it is implemented so that the circuitry and timing seen by each timeslot is identical.
+Adapting the timeslot input circuitry used on the 7D11, the timeslot pulses from the mainframe are fed to a JFET, which is normally conducting, with its drain at 0V. When the TS pulse starts to go negative, the JFET will turn off, allowing the voltage at the drain to rise. Since the PSoC lacks schmitt trigger inputs, we use on-chip comparators with hysterisis enabled to condition the input signal. This circuit is implemented twice, once for TS1 and once for all the other TS signals, diode or-ed together. A 100K pull-down resistor on the JFET gate ensures a timely turn on of the fet as the diodes would otherwise isolate the gate. Although the TS1 signal strictly speaking does not require the diode, it is implemented so that the circuitry and timing seen by each timeslot is identical.
 
 ![Input Conditioning](/Images/TS_Pulse_Input_Detail_20230703.png)
 
@@ -56,7 +56,7 @@ Combining the nine timeslot signals as shown reduces the number of input pins re
 
 ### Outputs
 
-Output requires 16 bits of digital GPIO for the maximum of four current sinks, while this may be possible directly with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the available GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the final design uses two 74HC595 shift registers coupled with a simple driver circuit implemented in the PSOC as a write-only 16-bit port expander. Each 595 shift register implemets 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuits.
+Output requires 16 bits of digital GPIO for the maximum of four current sinks, while this may be possible directly with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the available GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the final design uses two 74HC595 shift registers coupled with a simple driver circuit implemented in the PSoC as a write-only 16-bit port expander. Each 595 shift register implemets 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSoC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuits.
 
 ![TS Output Logic](/Images/Readout_output_20230703.png)
 
