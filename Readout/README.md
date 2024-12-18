@@ -54,12 +54,12 @@ Combining the nine timeslot signals as shown reduces the number of input pins re
 
 ### Outputs
 
-Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the final design was uses 74HC595 shift registers coupled with a simple driver circuit implemented in the PSOC as a write-only port expander. Two 595 shift registers are used, each implemeting the 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuit.
+Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the final design uses two 74HC595 shift registers coupled with a simple driver circuit implemented in the PSOC as a write-only 16-bit port expander. Each 595 shift register implemets 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuits.
 
 ![TS Output Logic](/Images/Readout_output_20230703.png)
 
 ### Readout Row and Column Currents
-Four current sinks (two channels, each with independent row & column currents)  encode the data for the currently indicated timeslot.  
+Four identical current sinks (two channels, each with independent row & column currents) encode the data for the currently indicated timeslot.  
 Channel 1 data will appear at the top of the screen, Channel 2 data will appear at the bottom of the screen.
 
 The circuit used is shown below:
