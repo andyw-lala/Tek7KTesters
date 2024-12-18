@@ -21,6 +21,8 @@ The timing is not explicitly specified in the documentation (that I can find), s
 
 The above image clearly shows a timeslot pulse that is around 130us wide, with a plateau at -15V between approximately 45us and 65us, which is where the sampling must occur for the specified resistor values to generate the appropriate currents.
 
+More details can be found on [TekWiki](https://w140.com/tekwiki/wiki/7000_series_readout_system).
+
 # Interfacing to PSoC
 
 Adapting the timeslot input circuitry used on the 7D11, the timeslot pulses from the mainframe are fed to a JFET, which is normally conducting, with its drain at 0V. When the TS pulse starts to go negative, the JFET will turn off, allowing the voltage at the drain to rise. Since the PSOC lacks schmitt trigger inputs, we use on-chip comparators with hysterisis enabled to condition the input signal. This circuit is implemented twice, once for TS1 and once for all the other TS signals, diode or-ed together. A 100K pull-down resistor on the JFET gate ensures a timely turn on of the fet as the diodes would otherwise isolate the gate. Although the TS1 signal strictly speaking does not require the diode, it is implemented so that the circuitry and timing seen by each timeslot is identical.
