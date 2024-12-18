@@ -41,6 +41,8 @@ The following image shows the same input pulse in blue, but the red trace reflec
 
 This demonstrates that the solution will work, and as long as we do not mask interrupts for extended periods we can use software to service the readout circuitry.
 
+Note that should the PSoC become unable to service interrupts (due to firmware crash, reset, flashing, or debugger activity) the readout will not longer be updated for each timeslot, resulting in each display field filling with the same character (usually the last one written just before interrupts were no longer serviced.) Each display field can show different characters.
+
 ## PSoC Connectivity
 
 ### Inputs
@@ -54,7 +56,7 @@ Combining the nine timeslot signals as shown reduces the number of input pins re
 
 ### Outputs
 
-Output requires 16 pins of digital GPIO for all 4 current sinks, while this may be possible with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the final design uses two 74HC595 shift registers coupled with a simple driver circuit implemented in the PSOC as a write-only 16-bit port expander. Each 595 shift register implemets 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuits.
+Output requires 16 bits of digital GPIO for the maximum of four current sinks, while this may be possible directly with specific members of the PSoC device family, it was highly desirable to be able to use the CY8CKIT-059, meaning that the available GPIO pin count was constrained. Initially a Microchip MCP23S17 I/O expander using SPI was prototyped, but the final design uses two 74HC595 shift registers coupled with a simple driver circuit implemented in the PSOC as a write-only 16-bit port expander. Each 595 shift register implemets 8 bits (4 row + 4 column) required for one channel. These are daisy-chained, so that the PSOC clocks 16 bits out in one operation and then strobes the register clock line to simultaneously present all 16 bits to the current generation circuits.
 
 ![TS Output Logic](/Images/Readout_output_20230703.png)
 
