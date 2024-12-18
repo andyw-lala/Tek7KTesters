@@ -72,10 +72,10 @@ The parallel outputs of the shift registers drive four independent 4-bit [R-2R v
 
 As described above, the mainframe samples the current flowing out of the mainframe row and current sense pins on the backplane in 100uA steps when the timeslot signals are stable at -15V (the middle of the pulse.)
 These mainframe row and current sense pins are nominally at ground.
-The current is developed by applying a negative voltage across a fixed resistor which connects to the mainframe row and column pins. Since 5K precision (1%) resistors are aleady used elsewhere in the design, this value was selected.
-100uA corresponds to 500mV across a 5K resistor, therefor a simple inverting amplifier with a gain of -1.6 (recall that the impedance seen looking into the R-2R ladder will always be 10K, hence the feedback resistor of 16K) is used to convert the positive-going DAC output voltage into a suitable negative voltage. Converting each 312.5mV step from the DAC into -500mV at the output of the opamp, resulting in 100uA current per-step flowing out of the mainframe sense pins. The maximum negative voltage generated for a code of 15 is -7.5V.
+The current is developed by applying negative voltages across fixed resistors connected to the mainframe row and column pins. Since 5K precision (1%) resistors are aleady used elsewhere in the design, this value was selected.
+100uA corresponds to 500mV across a 5K resistor, therefore a simple inverting amplifier with a gain of -1.6 (recall that the impedance seen looking into the R-2R ladder will always be 10K, hence the feedback resistor of 16K) is used to convert the positive-going DAC output voltage into a suitable negative voltage. Converting each 312.5mV step from the DAC into -500mV at the output of the opamp, resulting in 100uA current per-step flowing out of the mainframe sense pins. The maximum negative voltage generated for a code of 15 is -7.5V.
 
-Thus we can generate four independent 0 - 1500uA current sinks at 100uA resolution, using only 3 digital pins on the PSoC, and three low-cost ICs.
+Thus we can generate four independent 0 - 1500uA current sinks at 100uA resolution, using only 3 digital pins on the PSoC, and three low-cost ICs. The total PSoC pin count used for the readout interface is five: 2 analog inputs and three digital outputs.
 
 ## Demonstration of circuit in action
 ![Image of readout display](/Images/Readout_Example_20230703.jpg)
