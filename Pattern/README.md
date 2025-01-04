@@ -36,7 +36,7 @@ In addition to the differential signals and Aux Z axis outputs provided to the b
 ## Outputs
 The following signals are provided:
 * Sweep Trigger Output (front panel BNC) 
-* + Trigger Out (backplane A13)
+* \+ Trigger Out (backplane A13)
 * Sweep Gate (backplane A1)
 * Hold Off (backplane B4)
 * Aux Y (backplane B16)
