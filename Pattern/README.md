@@ -31,6 +31,23 @@ The Tek 067-0587-* fixtures could generate either 11 or 110 lines, with sweeps f
 The new fixture can generate 11 or 51 vertical lines, and 9 or 41 horizontal lines, with sweeps from approximately 50Hz to 450KHz, and independently control the ramp repetition frequency in 500nS steps. At very slow speeds, the signals are so sparse that it can be difficult to visually align with the graticule markings; at the very fastest speeds, the software can begin to have trouble setting up additional signals such as the Z Axis output, resulting in inconsistent trace intensity.
 The independent and highly configurable ramp time and ramp repetition frequency , combined with flexible signal routing allows for a great range of possible test patterns and speeds.
 
+# Additional Signals
+In addition to the differential signals and Aux Z axis outputs provided to the backplane, and the vertical and horizontal front panel outputs, several additional signals are implemented.
+## Outputs
+The following signals are provided:
+* Sweep Trigger Output (front panel BNC) 
+* + Trigger Out (backplane A13)
+* Sweep Gate (backplane A1)
+* Hold Off (backplane B4)
+* Aux Y (backplane B16)
+## Inputs
+The following inputs are used:
+* Chop Drive (backplane A5)
+
+The following inputs are terminated in 50Ohm, but not used:
+* +/- Trigger In (backplane A20/B20)
+
+
 [CY8CKIT-059](https://www.mouser.com/ProductDetail/Cypress-Semiconductor/CY8CKIT-059)
 
 [PSoC Creator IDE](https://www.cypress.com/products/psoc-creator-integrated-design-environment-ide)
